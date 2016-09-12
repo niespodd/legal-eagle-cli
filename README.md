@@ -6,6 +6,7 @@ This library is a wrapper on [legal-eagle library](https://github.com/atom/legal
 
 ## Features 
 * Raw JSON output by default (or with `-o json`)
+* Optional CSV output with `-o csv`
 * Templated based listing generation `-o template -t templates/custom.html` (see default template: `templates/default.html`)
 * Help always within reach `--help`
 
