@@ -12,7 +12,7 @@ var legalEagle = require('legal-eagle'),
         .describe('t', "Template used for 'template' output-type.")
         .alias('o', 'output-type')
         .nargs('o', 1)
-        .choices('o', ['template', 'json'])
+        .choices('o', ['template', 'json', 'csv'])
         .describe('o', 'Output type (default: json, can be: template, json)')
         .alias('p', 'path')
         .nargs('p', 1)
@@ -36,6 +36,19 @@ var prettify = function(summary) {
     return output;
 };
 
+var csvize = function(summary) {
+    var output = "";
+    var packages = Object.keys(summary);
+
+    for(var i=0; i<packages.length; i++) {
+        var pkg = packages[i];
+        var nv = pkg.split("@");
+
+        output += nv[0] + "," + nv[1] + "," + summary[pkg]['license'] + "," + summary[pkg]['repository'] + "\n";
+    }
+    return output;
+};
+
 legalEagle({path: path}, function(err, summary) {
     if(err) return console.error(err);
 
@@ -46,6 +59,8 @@ legalEagle({path: path}, function(err, summary) {
         output = JSON.stringify(summary);
     } else if(outputType == "template") {
         output = prettify(summary);
+    } else if(outputType == "csv") {
+        output = csvize(summary);
     } else {
         console.error("Undefined output type " + outputType);
     }
