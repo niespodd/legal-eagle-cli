@@ -16,6 +16,9 @@ var legalEagle = require('legal-eagle'),
         .describe('o', 'Output type (default: json, can be: template, json)')
         .alias('p', 'path')
         .nargs('p', 1)
+        .describe('u', 'Remove duplicated package and license pairs')
+        .alias('u', 'unique')
+        .boolean('u')
         .describe('p', "Path to desired node project")
         .help('h')
         .alias('h', 'help')
@@ -24,29 +27,34 @@ var legalEagle = require('legal-eagle'),
 var template = argv['t'] || __dirname + "/templates/default.html";
 var path = argv['p'] || process.cwd();
 
-var prettify = function(summary) {
+var uniqueness = {};
+
+var parse = function(summary, parse_func) {
     var output = "";
-    var packages = Object.keys(summary);
+    var packages = Object.keys(summary).sort();
 
     for(var i=0; i<packages.length; i++) {
         var pkg = packages[i];
         summary[pkg]['_pkg'] = pkg.split("@");
-        output += nunjucks.render(template, {'package': summary[pkg]});
+
+        if(argv['u'] && uniqueness[summary[pkg]['_pkg'][0]] == summary[pkg]['license']) continue;
+        else uniqueness[summary[pkg]['_pkg'][0]] = summary[pkg]['license'];
+
+        output += parse_func(summary, pkg);
     }
     return output;
 };
 
+var prettify = function(summary) {
+    return parse(summary, function(summary, pkg) {
+        return nunjucks.renderString(fs.readFileSync(template, 'utf8'), {'package': summary[pkg]});
+    });
+};
+
 var csvize = function(summary) {
-    var output = "";
-    var packages = Object.keys(summary);
-
-    for(var i=0; i<packages.length; i++) {
-        var pkg = packages[i];
-        var nv = pkg.split("@");
-
-        output += nv[0] + "," + nv[1] + "," + summary[pkg]['license'] + "," + summary[pkg]['repository'] + "\n";
-    }
-    return output;
+    return parse(summary, function(summary, pkg) {
+        return summary[pkg]['_pkg'][0] + "," + summary[pkg]['_pkg'][1] + "," + summary[pkg]['license'] + "," + summary[pkg]['repository'] + "\n";
+    });
 };
 
 legalEagle({path: path}, function(err, summary) {
