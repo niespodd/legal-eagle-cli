@@ -8,8 +8,9 @@ This library is a wrapper on [legal-eagle library](https://github.com/atom/legal
 * Raw JSON output by default (or with `-o json`)
 * Optional CSV output with `-o csv`
 * Output is sorted by default
-* Package duplicates (e.g. two versions of same package) can be easily removed by `-u` flag (doesn't remove package if the license for different version was different)
-* Templated based listing generation `-o template -t templates/custom.html` (see default template: `templates/default.html`)
+* Package duplicates (e.g. two versions of same package) can be easily removed with `-u` flag (if the license is different for multiple package versions - all of them will be listed)
+
+g* Templated based listing generation `-o template -t templates/custom.html` (see default template: `templates/default.html`)
 * Help always within reach `--help`
 
 ## Tip for creating aggregated license listing from multiple projects
