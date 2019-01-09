@@ -34,8 +34,8 @@ var parse = function(summary, parse_func) {
 
     for(var i=0; i<packages.length; i++) {
         var pkg = packages[i];
-        summary[pkg]['_pkg'] = pkg.split("@");
-
+        summary[pkg]['_pkg'] = summary[pkg]['_pkg'].split("@").slice(undefined, -1).join("@");
+        
         if(argv['u'] && uniqueness[summary[pkg]['_pkg'][0]] == summary[pkg]['license']) continue;
         else uniqueness[summary[pkg]['_pkg'][0]] = summary[pkg]['license'];
 
