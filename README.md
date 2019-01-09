@@ -1,18 +1,24 @@
 # Legal Eagle command line tool
 
-This library is a wrapper on [legal-eagle library](https://github.com/atom/legal-eagle) developed by Atom. It facilitates the process of creating aggregated license listing based on `package.json` dependencies.
+This library is a wrapper on [legal-eagle](https://github.com/atom/legal-eagle) by Atom. It facilitates the process of 
+creating aggregated license listing files based on `package.json` dependencies. 
+
+Keywords: license attribution, legal compliance, license listing, legal eagle cli
 
 ![Imgur](http://i.imgur.com/i6PJues.png)
 
 ## Getting started
 `npm install -g legal-eagle-cli`
 
+## How to
+`legal-eagle > licenses.json` for more, help `legal-eagle -h`
+
 ## Features 
 * Raw JSON output by default (or with `-o json`)
 * Optional CSV output with `-o csv`
 * Output is sorted by default
 * Package duplicates (e.g. two versions of same package) can be easily removed with `-u` flag (if the license is different for multiple package versions - all of them will be listed)
-* Templated based listing generation `-o template -t templates/custom.html` (see default template: `templates/default.html`)
+* Templated based listing generation `-o template -t templates/custom.tpl` (see default template: `templates/default.tpl`)
 * Help always within reach `--help`
 
 ## Tip for creating aggregated license listing from multiple projects
