@@ -15,8 +15,7 @@
   "dependencies": {
     "legal-eagle": "^0.13.0",
     "node-argument-parser": "^0.1.0",
-    "nunjucks": "^2.5.0",
-    "promise": "^7.1.1"
+    "nunjucks": "^2.5.0"
   },
   "bin": {
     "legal-eagle": "./main.js"

@@ -4,7 +4,6 @@
 var legalEagle = require('legal-eagle'),
     fs = require('fs'),
     nunjucks = require('nunjucks'),
-    promise = require('promise'),
     argv = require('yargs')
         .usage("legal-eagle")
         .alias('t', 'template')
@@ -24,7 +23,7 @@ var legalEagle = require('legal-eagle'),
         .alias('h', 'help')
         .argv;
 
-var template = argv['t'] || __dirname + "/templates/default.html";
+var template = argv['t'] || __dirname + "/templates/default.tpl";
 var path = argv['p'] || process.cwd();
 
 var uniqueness = {};
@@ -35,7 +34,7 @@ var parse = function(summary, parse_func) {
 
     for(var i=0; i<packages.length; i++) {
         var pkg = packages[i];
-        summary[pkg]['_pkg'] = pkg.split("@");
+        summary[pkg]['_pkg'] = summary[pkg]['_pkg'].split("@").slice(undefined, -1).join("@");
 
         if(argv['u'] && uniqueness[summary[pkg]['_pkg'][0]] == summary[pkg]['license']) continue;
         else uniqueness[summary[pkg]['_pkg'][0]] = summary[pkg]['license'];
