@@ -4,7 +4,6 @@
 var legalEagle = require('legal-eagle'),
     fs = require('fs'),
     nunjucks = require('nunjucks'),
-    promise = require('promise'),
     argv = require('yargs')
         .usage("legal-eagle")
         .alias('t', 'template')
