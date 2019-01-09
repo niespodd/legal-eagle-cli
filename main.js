@@ -4,7 +4,6 @@
 var legalEagle = require('legal-eagle'),
     fs = require('fs'),
     nunjucks = require('nunjucks'),
-    promise = require('promise'),
     argv = require('yargs')
         .usage("legal-eagle")
         .alias('t', 'template')
@@ -24,7 +23,7 @@ var legalEagle = require('legal-eagle'),
         .alias('h', 'help')
         .argv;
 
-var template = argv['t'] || __dirname + "/templates/default.html";
+var template = argv['t'] || __dirname + "/templates/default.tpl";
 var path = argv['p'] || process.cwd();
 
 var uniqueness = {};
